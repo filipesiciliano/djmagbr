@@ -1,276 +1,666 @@
-<?php
-/**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- */
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use Cake\Datasource\ConnectionManager;
-use Cake\Error\Debugger;
-use Cake\Network\Exception\NotFoundException;
+        <div id="content">
 
-$this->layout = false;
+            <div id="content-header">
+                <h1>Dashboard</h1>
+            </div> <!-- #content-header -->
 
-if (!Configure::read('debug')) :
-    throw new NotFoundException(
-        'Please replace src/Template/Pages/home.ctp with your own version or re-enable debug mode.'
-    );
-endif;
 
-$cakeDescription = 'CakePHP: the rapid development PHP framework';
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>
-    </title>
+            <div id="content-container">
 
-    <?= $this->Html->meta('icon') ?>
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('style.css') ?>
-    <?= $this->Html->css('home.css') ?>
-    <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
-</head>
-<body class="home">
+                <div>
+                    <h4 class="heading-inline">Weekly Sales Stats
+                        &nbsp;&nbsp;<small>For the week of Jun 15 - Jun 22, 2011</small>
+                        &nbsp;&nbsp;</h4>
 
-<header class="row">
-    <div class="header-image"><?= $this->Html->image('cake.logo.svg') ?></div>
-    <div class="header-title">
-        <h1>Welcome to CakePHP <?= Configure::version() ?> Red Velvet. Build fast. Grow solid.</h1>
-    </div>
-</header>
+                    <div class="btn-group ">
+                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                            <i class="fa fa-clock-o"></i> &nbsp;
+                            Change Week <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="javascript:;">Action</a></li>
+                            <li><a href="javascript:;">Another action</a></li>
+                            <li><a href="javascript:;">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:;">Separated link</a></li>
+                        </ul>
+                    </div>
+                </div>
 
-<div class="row">
-    <div class="columns large-12">
-        <div class="ctp-warning alert text-center">
-            <p>Please be aware that this page will not be shown if you turn off debug mode unless you replace src/Template/Pages/home.ctp with your own version.</p>
-        </div>
-        <div id="url-rewriting-warning" class="alert url-rewriting">
-            <ul>
-                <li class="bullet problem">
-                    URL rewriting is not properly configured on your server.<br />
-                    1) <a target="_blank" href="https://book.cakephp.org/3.0/en/installation.html#url-rewriting">Help me configure it</a><br />
-                    2) <a target="_blank" href="https://book.cakephp.org/3.0/en/development/configuration.html#general-configuration">I don't / can't use URL rewriting</a>
-                </li>
-            </ul>
-        </div>
-        <?php Debugger::checkSecurityKeys(); ?>
-    </div>
-</div>
+                <br />
 
-<div class="row">
-    <div class="columns large-6">
-        <h4>Environment</h4>
-        <ul>
-        <?php if (version_compare(PHP_VERSION, '5.6.0', '>=')) : ?>
-            <li class="bullet success">Your version of PHP is 5.6.0 or higher (detected <?= PHP_VERSION ?>).</li>
-        <?php else : ?>
-            <li class="bullet problem">Your version of PHP is too low. You need PHP 5.6.0 or higher to use CakePHP (detected <?= PHP_VERSION ?>).</li>
-        <?php endif; ?>
 
-        <?php if (extension_loaded('mbstring')) : ?>
-            <li class="bullet success">Your version of PHP has the mbstring extension loaded.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your version of PHP does NOT have the mbstring extension loaded.</li>
-        <?php endif; ?>
+                <div class="row">
 
-        <?php if (extension_loaded('openssl')) : ?>
-            <li class="bullet success">Your version of PHP has the openssl extension loaded.</li>
-        <?php elseif (extension_loaded('mcrypt')) : ?>
-            <li class="bullet success">Your version of PHP has the mcrypt extension loaded.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>
-        <?php endif; ?>
+                    <div class="col-md-3 col-sm-6">
 
-        <?php if (extension_loaded('intl')) : ?>
-            <li class="bullet success">Your version of PHP has the intl extension loaded.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your version of PHP does NOT have the intl extension loaded.</li>
-        <?php endif; ?>
-        </ul>
-    </div>
-    <div class="columns large-6">
-        <h4>Filesystem</h4>
-        <ul>
-        <?php if (is_writable(TMP)) : ?>
-            <li class="bullet success">Your tmp directory is writable.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your tmp directory is NOT writable.</li>
-        <?php endif; ?>
+                        <a href="javascript:;" class="dashboard-stat primary">
+                            <div class="visual">
+                                <i class="fa fa-star"></i>
+                            </div> <!-- /.visual -->
 
-        <?php if (is_writable(LOGS)) : ?>
-            <li class="bullet success">Your logs directory is writable.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your logs directory is NOT writable.</li>
-        <?php endif; ?>
+                            <div class="details">
+                                <span class="content">New Orders</span>
+                                <span class="value">1,236</span>
+                            </div> <!-- /.details -->
 
-        <?php $settings = Cache::getConfig('_cake_core_'); ?>
-        <?php if (!empty($settings)) : ?>
-            <li class="bullet success">The <em><?= $settings['className'] ?>Engine</em> is being used for core caching. To change the config edit config/app.php</li>
-        <?php else : ?>
-            <li class="bullet problem">Your cache is NOT working. Please check the settings in config/app.php</li>
-        <?php endif; ?>
-        </ul>
-    </div>
-    <hr />
-</div>
+                            <i class="fa fa-play-circle more"></i>
 
-<div class="row">
-    <div class="columns large-6">
-        <h4>Database</h4>
-        <?php
-        try {
-            $connection = ConnectionManager::get('default');
-            $connected = $connection->connect();
-        } catch (Exception $connectionError) {
-            $connected = false;
-            $errorMsg = $connectionError->getMessage();
-            if (method_exists($connectionError, 'getAttributes')) :
-                $attributes = $connectionError->getAttributes();
-                if (isset($errorMsg['message'])) :
-                    $errorMsg .= '<br />' . $attributes['message'];
-                endif;
-            endif;
-        }
-        ?>
-        <ul>
-        <?php if ($connected) : ?>
-            <li class="bullet success">CakePHP is able to connect to the database.</li>
-        <?php else : ?>
-            <li class="bullet problem">CakePHP is NOT able to connect to the database.<br /><?= $errorMsg ?></li>
-        <?php endif; ?>
-        </ul>
-    </div>
-    <div class="columns large-6">
-        <h4>DebugKit</h4>
-        <ul>
-        <?php if (Plugin::loaded('DebugKit')) : ?>
-            <li class="bullet success">DebugKit is loaded.</li>
-        <?php else : ?>
-            <li class="bullet problem">DebugKit is NOT loaded. You need to either install pdo_sqlite, or define the "debug_kit" connection name.</li>
-        <?php endif; ?>
-        </ul>
-    </div>
-    <hr />
-</div>
+                        </a> <!-- /.dashboard-stat -->
 
-<div class="row">
-    <div class="columns large-6">
-        <h3>Editing this Page</h3>
-        <ul>
-            <li class="bullet cutlery">To change the content of this page, edit: src/Template/Pages/home.ctp.</li>
-            <li class="bullet cutlery">You can also add some CSS styles for your pages at: webroot/css/.</li>
-        </ul>
-    </div>
-    <div class="columns large-6">
-        <h3>Getting Started</h3>
-        <ul>
-            <li class="bullet book"><a target="_blank" href="https://book.cakephp.org/3.0/en/">CakePHP 3.0 Docs</a></li>
-            <li class="bullet book"><a target="_blank" href="https://book.cakephp.org/3.0/en/tutorials-and-examples/cms/installation.html">The 20 min CMS Tutorial</a></li>
-        </ul>
-    </div>
-</div>
+                    </div> <!-- /.col-md-3 -->
 
-<div class="row">
-    <div class="columns large-12 text-center">
-        <h3 class="more">More about Cake</h3>
-        <p>
-            CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Front Controller and MVC.<br />
-            Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
-        </p>
-    </div>
-    <hr/>
-</div>
+                    <div class="col-md-3 col-sm-6">
 
-<div class="row">
-    <div class="columns large-4">
-        <i class="icon support">P</i>
-        <h3>Help and Bug Reports</h3>
-        <ul>
-            <li class="bullet cutlery">
-                <a href="irc://irc.freenode.net/cakephp">irc.freenode.net #cakephp</a>
-                <ul><li>Live chat about CakePHP</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="http://cakesf.herokuapp.com/">Slack</a>
-                <ul><li>CakePHP Slack support</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://github.com/cakephp/cakephp/issues">CakePHP Issues</a>
-                <ul><li>CakePHP issues and pull requests</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="http://discourse.cakephp.org/">CakePHP Forum</a>
-                <ul><li>CakePHP official discussion forum</li></ul>
-            </li>
-        </ul>
-    </div>
-    <div class="columns large-4">
-        <i class="icon docs">r</i>
-        <h3>Docs and Downloads</h3>
-        <ul>
-            <li class="bullet cutlery">
-                <a href="https://api.cakephp.org/3.0/">CakePHP API</a>
-                <ul><li>Quick Reference</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://book.cakephp.org/3.0/en/">CakePHP Documentation</a>
-                <ul><li>Your Rapid Development Cookbook</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://bakery.cakephp.org">The Bakery</a>
-                <ul><li>Everything CakePHP</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://plugins.cakephp.org">CakePHP plugins repo</a>
-                <ul><li>A comprehensive list of all CakePHP plugins created by the community</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://github.com/cakephp/">CakePHP Code</a>
-                <ul><li>For the Development of CakePHP Git repository, Downloads</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://github.com/FriendsOfCake/awesome-cakephp">CakePHP Awesome List</a>
-                <ul><li>A curated list of amazingly awesome CakePHP plugins, resources and shiny things.</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://www.cakephp.org">CakePHP</a>
-                <ul><li>The Rapid Development Framework</li></ul>
-            </li>
-        </ul>
-    </div>
-    <div class="columns large-4">
-        <i class="icon training">s</i>
-        <h3>Training and Certification</h3>
-        <ul>
-            <li class="bullet cutlery">
-                <a href="https://cakefoundation.org/">Cake Software Foundation</a>
-                <ul><li>Promoting development related to CakePHP</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://training.cakephp.org/">CakePHP Training</a>
-                <ul><li>Learn to use the CakePHP framework</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://certification.cakephp.org/">CakePHP Certification</a>
-                <ul><li>Become a certified CakePHP developer</li></ul>
-            </li>
-        </ul>
-    </div>
-</div>
+                        <a href="javascript:;" class="dashboard-stat secondary">
+                            <div class="visual">
+                                <i class="fa fa-shopping-cart"></i>
+                            </div> <!-- /.visual -->
 
-</body>
-</html>
+                            <div class="details">
+                                <span class="content">Abandoned Carts</span>
+                                <span class="value">256</span>
+                            </div> <!-- /.details -->
+
+                            <i class="fa fa-play-circle more"></i>
+
+                        </a> <!-- /.dashboard-stat -->
+
+                    </div> <!-- /.col-md-3 -->
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <a href="javascript:;" class="dashboard-stat tertiary">
+                            <div class="visual">
+                                <i class="fa fa-clock-o"></i>
+                            </div> <!-- /.visual -->
+
+                            <div class="details">
+                                <span class="content">Avg. Support Time</span>
+                                <span class="value">4:37</span>
+                            </div> <!-- /.details -->
+
+                            <i class="fa fa-play-circle more"></i>
+
+                        </a> <!-- /.dashboard-stat -->
+
+                    </div> <!-- /.col-md-3 -->
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <a href="javascript:;" class="dashboard-stat">
+                            <div class="visual">
+                                <i class="fa fa-money"></i>
+                            </div> <!-- /.visual -->
+
+                            <div class="details">
+                                <span class="content">Total Revenue</span>
+                                <span class="value">$173K</span>
+                            </div> <!-- /.details -->
+
+                            <i class="fa fa-play-circle more"></i>
+
+                        </a> <!-- /.dashboard-stat -->
+
+                    </div> <!-- /.col-md-9 -->
+
+
+
+                </div> <!-- /.row -->
+
+
+
+
+                <div class="row">
+
+                    <div class="col-md-9">
+
+                        <div class="portlet">
+
+                            <div class="portlet-header">
+
+                                <h3>
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    Area Chart
+                                </h3>
+
+                            </div> <!-- /.portlet-header -->
+
+                            <div class="portlet-content">
+
+                                <div class="pull-left">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-sm btn-default">
+                                            <input type="radio" name="options" id="option1"> Day
+                                        </label>
+                                        <label class="btn btn-sm btn-default">
+                                            <input type="radio" name="options" id="option2"> Week
+                                        </label>
+                                        <label class="btn btn-sm btn-default active">
+                                            <input type="radio" name="options" id="option3"> Month
+                                        </label>
+                                    </div>
+
+                                    &nbsp;
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                            Custom Date
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:;">Dropdown link</a></li>
+                                            <li><a href="javascript:;">Dropdown link</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                            <i class="fa fa-cog"></i> &nbsp;&nbsp;<span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li><a href="javascript:;">Action</a></li>
+                                            <li><a href="javascript:;">Another action</a></li>
+                                            <li><a href="javascript:;">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="javascript:;">Separated link</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="clear"></div>
+                                <hr />
+
+
+                                <div id="area-chart" class="chart-holder" style="height: 250px"></div>
+                                <!-- /#bar-chart -->
+
+                            </div> <!-- /.portlet-content -->
+
+                        </div> <!-- /.portlet -->
+
+
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="portlet">
+
+                                    <div class="portlet-header">
+
+                                        <h3>
+                                            <i class="fa fa-money"></i>
+                                            Recent Orders
+                                        </h3>
+
+                                        <ul class="portlet-tools pull-right">
+                                            <li>
+                                                <button class="btn btn-sm btn-default">
+                                                    Add Order
+                                                </button>
+                                            </li>
+                                        </ul>
+
+                                    </div> <!-- /.portlet-header -->
+
+                                    <div class="portlet-content">
+
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Purchased On</th>
+                                                        <th>Items</th>
+                                                        <th>Amount</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>09/21/2013</td>
+                                                        <td>3</td>
+                                                        <td>$108.35</td>
+                                                        <td><a href="javascript:;" class="btn btn-xs btn-tertiary">View
+                                                                &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>09/21/2013</td>
+                                                        <td>1</td>
+                                                        <td>$30.89</td>
+                                                        <td><a href="javascript:;" class="btn btn-xs btn-tertiary">View
+                                                                &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>09/20/2013</td>
+                                                        <td>2</td>
+                                                        <td>$52.06</td>
+                                                        <td><a href="javascript:;" class="btn btn-xs btn-tertiary">View
+                                                                &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>09/19/2013</td>
+                                                        <td>4</td>
+                                                        <td>$73.54</td>
+                                                        <td><a href="javascript:;" class="btn btn-xs btn-tertiary">View
+                                                                &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>09/19/2013</td>
+                                                        <td>4</td>
+                                                        <td>$73.54</td>
+                                                        <td><a href="javascript:;" class="btn btn-xs btn-tertiary">View
+                                                                &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>09/19/2013</td>
+                                                        <td>4</td>
+                                                        <td>$73.54</td>
+                                                        <td><a href="javascript:;" class="btn btn-xs btn-tertiary">View
+                                                                &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- /.table-responsive -->
+
+                                        <hr />
+
+                                        <a href="javascript:;" class="btn btn-sm btn-secondary">View All Orders</a>
+
+
+                                    </div> <!-- /.portlet-content -->
+
+                                </div> <!-- /.portlet -->
+
+
+                            </div> <!-- /.col-md-4 -->
+
+
+
+                            <div class="col-md-6">
+
+                                <div class="portlet">
+
+                                    <div class="portlet-header">
+
+                                        <h3>
+                                            <i class="fa fa-group"></i>
+                                            Recent Signups
+                                        </h3>
+
+                                        <ul class="portlet-tools pull-right">
+                                            <li>
+                                                <button class="btn btn-sm btn-default">
+                                                    Add User
+                                                </button>
+                                            </li>
+                                        </ul>
+
+                                    </div> <!-- /.portlet-header -->
+
+                                    <div class="portlet-content">
+
+
+                                        <div class="table-responsive">
+
+                                            <table id="user-signups" class="table table-striped table-checkable">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="checkbox-column">
+                                                            <input type="checkbox" id="check-all" class="icheck-input" />
+                                                        </th>
+                                                        <th class="hidden-xs">First Name
+                                                        </th>
+                                                        <th>Last Name</th>
+                                                        <th>Status
+                                                        </th>
+
+                                                        <th class="align-center">Approve
+                                                        </th>
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr class="">
+                                                        <td class="checkbox-column">
+                                                            <input type="checkbox" name="actiony" value="joey" class="icheck-input">
+                                                        </td>
+
+                                                        <td class="hidden-xs">Joey</td>
+                                                        <td>Greyson</td>
+                                                        <td><span class="label label-success">Approved</span></td>
+                                                        <td class="align-center">
+                                                            <a href="javascript:void(0);" class="btn btn-xs btn-primary"
+                                                                data-original-title="Approve">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="">
+                                                        <td class="checkbox-column">
+                                                            <input type="checkbox" name="actiony" value="wolf" class="icheck-input">
+                                                        </td>
+                                                        <td class="hidden-xs">Wolf</td>
+                                                        <td>Bud</td>
+                                                        <td><span class="label label-default">Pending</span>
+                                                        </td>
+                                                        <td class="align-center">
+                                                            <a href="javascript:void(0);" class="btn btn-xs btn-primary"
+                                                                data-original-title="Approve">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr class="">
+                                                        <td class="checkbox-column">
+                                                            <input type="checkbox" name="actiony" value="sam" class="icheck-input">
+                                                        </td>
+
+                                                        <td class="hidden-xs">Sam</td>
+                                                        <td>Mitchell</td>
+                                                        <td><span class="label label-success">Approved</span></td>
+                                                        <td class="align-center">
+                                                            <a href="javascript:void(0);" class="btn btn-xs btn-primary"
+                                                                data-original-title="Approve">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="">
+                                                        <td class="checkbox-column">
+                                                            <input type="checkbox" value="carlos" name="actiony" class="icheck-input">
+                                                        </td>
+                                                        <td class="hidden-xs">Carlos</td>
+                                                        <td>Lopez</td>
+                                                        <td><span class="label label-success">Approved</span></td>
+                                                        <td class="align-center">
+                                                            <a href="javascript:void(0);" class="btn btn-xs btn-primary"
+                                                                data-original-title="Approve">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+
+
+
+
+                                                    <tr class="">
+                                                        <td class="checkbox-column">
+                                                            <input type="checkbox" name="actiony" value="rob" class="icheck-input">
+                                                        </td>
+                                                        <td class="hidden-xs">Rob</td>
+                                                        <td>Johnson</td>
+                                                        <td><span class="label label-default">Pending</span></td>
+                                                        <td class="align-center">
+                                                            <a href="javascript:void(0);" class="btn btn-xs btn-primary"
+                                                                data-original-title="Approve">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="">
+                                                        <td class="checkbox-column">
+                                                            <input type="checkbox" value="mike" name="actiony" class="icheck-input">
+                                                        </td>
+                                                        <td class="hidden-xs">Mike</td>
+                                                        <td>Jones</td>
+                                                        <td><span class="label label-default">Pending</span></td>
+                                                        <td class="align-center">
+                                                            <a href="javascript:void(0);" class="btn btn-xs btn-primary"
+                                                                data-original-title="Approve">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+
+
+                                        </div> <!-- /.table-responsive -->
+
+                                        <hr />
+
+                                        Apply to Selected: &nbsp;&nbsp;
+                                        <select id="apply-selected" name="table-select" class="ui-select2" style="width: 125px">
+                                            <option value="">Select Action</option>
+                                            <option value="approve">Approve</option>
+                                            <option value="edit">Edit</option>
+                                            <option value="delete">Delete</option>
+
+                                        </select>
+
+                                    </div> <!-- /.portlet-content -->
+
+                                </div> <!-- /.portlet -->
+
+                            </div> <!-- /.col-md-4 -->
+
+
+                        </div> <!-- /.row -->
+
+
+
+
+
+
+                        <div class="portlet">
+
+                            <div class="portlet-header">
+
+                                <h3>
+                                    <i class="fa fa-calendar"></i>
+                                    Full Calendar
+                                </h3>
+
+                            </div> <!-- /.portlet-header -->
+
+                            <div class="portlet-content">
+
+
+                                <div id="full-calendar"></div>
+
+
+                            </div> <!-- /.portlet-content -->
+
+                        </div> <!-- /.portlet -->
+
+
+
+                    </div> <!-- /.col-md-9 -->
+
+
+
+
+                    <div class="col-md-3">
+
+                        <div class="portlet">
+
+                            <div class="portlet-header">
+
+                                <h3>
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    Donut Chart
+                                </h3>
+
+                            </div> <!-- /.portlet-header -->
+
+                            <div class="portlet-content">
+
+                                <div id="donut-chart" class="chart-holder" style="height: 250px"></div>
+
+
+                            </div> <!-- /.portlet-content -->
+
+                        </div> <!-- /.portlet -->
+
+
+
+                        <div class="portlet">
+
+                            <div class="portlet-header">
+
+                                <h3>
+                                    <i class="fa fa-compass"></i>
+                                    Traffic Overview
+                                </h3>
+
+                            </div> <!-- /.portlet-header -->
+
+                            <div class="portlet-content">
+
+
+                                <div class="progress-stat">
+
+                                    <div class="stat-header">
+
+                                        <div class="stat-label">
+                                            % New Visits
+                                        </div> <!-- /.stat-label -->
+
+                                        <div class="stat-value">
+                                            77.7%
+                                        </div> <!-- /.stat-value -->
+
+                                    </div> <!-- /stat-header -->
+
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="77"
+                                            aria-valuemin="0" aria-valuemax="100" style="width: 77%">
+                                            <span class="sr-only">77.74% Visit Rate</span>
+                                        </div>
+                                    </div> <!-- /.progress -->
+
+                                </div> <!-- /.progress-stat -->
+
+                                <div class="progress-stat">
+
+                                    <div class="stat-header">
+
+                                        <div class="stat-label">
+                                            % Mobile Visitors
+                                        </div> <!-- /.stat-label -->
+
+                                        <div class="stat-value">
+                                            33.2%
+                                        </div> <!-- /.stat-value -->
+
+                                    </div> <!-- /stat-header -->
+
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-tertiary" role="progressbar"
+                                            aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                                            <span class="sr-only">33% Mobile Visitors</span>
+                                        </div>
+                                    </div> <!-- /.progress -->
+
+                                </div> <!-- /.progress-stat -->
+
+                                <div class="progress-stat">
+
+                                    <div class="stat-header">
+
+                                        <div class="stat-label">
+                                            Bounce Rate
+                                        </div> <!-- /.stat-label -->
+
+                                        <div class="stat-value">
+                                            42.7%
+                                        </div> <!-- /.stat-value -->
+
+                                    </div> <!-- /stat-header -->
+
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-secondary" role="progressbar"
+                                            aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" style="width: 42%">
+                                            <span class="sr-only">42.7% Bounce Rate</span>
+                                        </div>
+                                    </div> <!-- /.progress -->
+
+                                </div> <!-- /.progress-stat -->
+
+                                <br />
+
+                            </div> <!-- /.portlet-content -->
+
+                        </div> <!-- /.portlet -->
+
+
+
+
+                        <div class="portlet">
+
+                            <div class="portlet-header">
+
+                                <h3>
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    Sparkline
+                                </h3>
+
+                            </div> <!-- /.portlet-header -->
+
+                            <div class="portlet-content">
+
+                                <div class="row row-marginless">
+
+                                    <div class="spark-stat col-md-6 col-sm-6 col-xs-6">
+
+                                        <div id="total-visits">32, 38, 46, 49, 53, 48, 47, 56</div>
+                                        <span class="value">1,564</span>
+                                        <h5>Total Visits</h5>
+
+                                    </div> <!-- /.col -->
+
+                                    <div class="spark-stat col-md-6 col-sm-6 col-xs-6">
+
+                                        <div id="new-visits">32, 38, 46, 49, 53, 48, 47, 56</div>
+                                        <span class="value">872</span>
+                                        <h5>New Visits</h5>
+
+                                    </div> <!-- /.col -->
+
+                                </div> <!-- /.row -->
+
+
+                                <div class="row row-marginless">
+
+                                    <div class="spark-stat col-md-6 col-sm-6 col-xs-6">
+
+                                        <div id="unique-visits">32, 38, 46, 49, 53, 48, 47, 56</div>
+                                        <span class="value">845</span>
+                                        <h5>Unique Visits</h5>
+
+                                    </div> <!-- /.col -->
+
+                                    <div class="spark-stat col-md-6 col-sm-6 col-xs-6">
+
+                                        <div id="revenue-visits" data-bar-color="#c00">32, 38, 46, 49, 53, 48, 47, 56</div>
+                                        <span class="value">$13,492</span>
+                                        <h5>Revenue Visits</h5>
+
+                                    </div> <!-- /.col -->
+
+                                </div> <!-- /.row -->
+
+                            </div> <!-- /.portlet-content -->
+
+                        </div> <!-- /.portlet -->
+
+                    </div> <!-- /.col -->
+
+                </div> <!-- /.row -->
+
+            </div> <!-- /#content-container -->
+
+
+        </div> <!-- #content -->

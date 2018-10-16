@@ -1,57 +1,70 @@
-<?php
-/**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- */
-
-$cakeDescription = 'CakePHP: the rapid development php framework';
-?>
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
+    <title><?=$this->fetch('title') ?></title>
+    <div id="wrapper">
+        <?=$this->element('header'); ?>
+        <?=$this->element('sidebar'); ?>
+	    <?=$this->Html->charset() ?>
+    </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dj Mag Brasil - DjMag Brasil">
+	<meta name="author" content="Filipe Siciliano" />
+    <?=$this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('style.css') ?>
-
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,800italic,400,600,800" type="text/css">
+    <?=$this->Html->css([
+ "font-awesome.min.css",
+ "bootstrap.min.css",
+ "../js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.css",
+]) ?>
+    <?=$this->Html->css([
+ "../js/plugins/icheck/skins/minimal/blue.css",
+ "../js/plugins/select2/select2.css",
+ "../js/plugins/fullcalendar/fullcalendar.css",
+]) ?>
+    <?=$this->Html->css("App.css") ?>
+    <?=$this->Html->css("custom.css") ?>
+    <?=$this->fetch('meta') ?>
+    <?=$this->fetch('css') ?>
 </head>
 <body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="https://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
-    </div>
-    <footer>
-    </footer>
+    <?=$this->fetch('content'); ?>
+    <?=$this->Html->script([
+ "libs/jquery-1.9.1.min.js",
+ "libs/jquery-ui-1.9.2.custom.min.js",
+ "libs/bootstrap.min.js",
+]); ?>
+
+    <?=$this->Html->script([
+ "plugins/icheck/jquery.icheck.min.js",
+ "plugins/select2/select2.js",
+ "plugins/tableCheckable/jquery.tableCheckable.js",
+]); ?>
+
+    <?=$this->Html->script("App.js"); ?>
+
+    <?=$this->Html->script([
+ "libs/raphael-2.1.2.min.js",
+ "plugins/morris/morris.min.js",
+]); ?>
+
+    <?=$this->Html->script([
+ "demos/charts/morris/area.js",
+ "demos/charts/morris/donut.js",
+]); ?>
+
+    <?=$this->Html->script("plugins/sparkline/jquery.sparkline.min.js"); ?>
+
+    <?=$this->Html->script([
+ "plugins/fullcalendar/fullcalendar.min.js",
+ "demos/calendar.js",
+]); ?>
+    <?=$this->Html->script("demos/dashboard.js"); ?>
+    <?=$this->fetch('script') ?>
+    <?=$this->element('footer'); ?>
 </body>
 </html>

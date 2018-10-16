@@ -27,29 +27,63 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+ public $helpers = [
+  'Form' => ['className' => 'form'],
+ ];
+ /**
+  * Initialization hook method.
+  *
+  * Use this method to add common initialization code like loading components.
+  *
+  * e.g. `$this->loadComponent('Security');`
+  *
+  * @return void
+  */
+ public function initialize()
+ {
+  parent::initialize();
 
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
+  $this->loadComponent('RequestHandler', [
+   'enableBeforeRedirect' => false,
+  ]);
 
-        $this->loadComponent('RequestHandler', [
-            'enableBeforeRedirect' => false,
-        ]);
-        $this->loadComponent('Flash');
+  $this->loadComponent('Flash');
+  $this->loadComponent('Auth', [
+   'authenticate'   => [
+    'Form' => [
+     'fields' => [
+      'username' => 'email',
+      'password' => 'password',
+     ],
+    ],
+   ],
+   'loginAction'    => [
+    'controller' => 'Users',
+    'action'     => 'login',
+   ],
+   'loginRedirect'  => [
+    'controller' => 'Pages',
+    'action'     => 'home',
+   ],
+   'logoutRedirect' => [
+    'controller' => 'Users',
+    'action'     => 'login',
+    'home',
+   ],
+  ]);
 
-        /*
-         * Enable the following component for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-    }
+  // Allow the display action so our PagesController
+  // continues to work. Also enable the read only actions.
+
+  /*
+   * Enable the following component for recommended CakePHP security settings.
+   * see https://book.cakephp.org/3.0/en/controllers/components/security.html
+   */
+  //$this->loadComponent('Security');
+ }
+ public function beforeFilter(Event $event)
+ {
+  //$this->Auth->allow(['index', 'view', 'display']);
+ }
+
 }
