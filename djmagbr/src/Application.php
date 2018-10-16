@@ -30,44 +30,44 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  */
 class Application extends BaseApplication
 {
- /**
-  * {@inheritDoc}
-  */
- public function bootstrap()
- {
-  $this->addPlugin('Migrations');
+    /**
+     * {@inheritDoc}
+     */
+    public function bootstrap()
+    {
+        $this->addPlugin('Migrations');
 
-  // Call parent to load bootstrap from files.
-  parent::bootstrap();
+        // Call parent to load bootstrap from files.
+        parent::bootstrap();
 
-  if (PHP_SAPI === 'cli') {
-   try {
-    $this->addPlugin('Bake');
-   } catch (MissingPluginException $e) {
-    // Do not halt if the plugin is missing
-   }
+        if (PHP_SAPI === 'cli') {
+            try {
+                $this->addPlugin('Bake');
+            } catch (MissingPluginException $e) {
+                // Do not halt if the plugin is missing
+            }
 
-   $this->addPlugin('Migrations');
-  }
+            $this->addPlugin('Migrations');
+        }
 
-  /*
-   * Only try to load DebugKit in development mode
-   * Debug Kit should not be installed on a production system
-   */
-  if (Configure::read('debug')) {
-   $this->addPlugin(\DebugKit\Plugin::class);
-  }
- }
+        /*
+         * Only try to load DebugKit in development mode
+         * Debug Kit should not be installed on a production system
+         */
+        if (Configure::read('debug')) {
+            $this->addPlugin(\DebugKit\Plugin::class);
+        }
+    }
 
- /**
-  * Setup the middleware queue your application will use.
-  *
-  * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
-  * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
-  */
- public function middleware($middlewareQueue)
- {
-  $middlewareQueue
+    /**
+     * Setup the middleware queue your application will use.
+     *
+     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
+     * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
+     */
+    public function middleware($middlewareQueue)
+    {
+        $middlewareQueue
   // Catch any exceptions in the lower layers,
   // and make an error page/response
   ->add(ErrorHandlerMiddleware::class)
@@ -88,6 +88,6 @@ class Application extends BaseApplication
     'httpOnly' => true,
    ]));
 
-  return $middlewareQueue;
- }
+        return $middlewareQueue;
+    }
 }

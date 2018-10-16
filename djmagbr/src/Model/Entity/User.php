@@ -27,24 +27,24 @@ class User extends Entity
   *
   * @var array
   */
- protected $_accessible = [
+    protected $_accessible = [
   '*'  => true,
   'id' => false,
  ];
 
- protected function _setPassword($password)
- {
-  if (strlen($password) > 0) {
-   return (new DefaultPasswordHasher)->hash($password);
-  }
- }
+    protected function _setPassword($password)
+    {
+        if (strlen($password) > 0) {
+            return (new DefaultPasswordHasher)->hash($password);
+        }
+    }
 
- /**
-  * Fields that are excluded from JSON versions of the entity.
-  *
-  * @var array
-  */
- protected $_hidden = [
+    /**
+     * Fields that are excluded from JSON versions of the entity.
+     *
+     * @var array
+     */
+    protected $_hidden = [
   'password',
  ];
 }

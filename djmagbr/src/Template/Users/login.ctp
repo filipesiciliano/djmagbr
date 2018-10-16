@@ -5,7 +5,7 @@ $this->Form->templates([
 ?>
 <div id="login-container">
     <div id="login">
-        <?=$this->Flash->render('auth') ?>
+        <?=$this->Flash->render(); ?>
         <h3>Dj Mag Brasil Admin.</h3>
         <?=$this->Form->create('users', ['action' => 'login']) ?>
         <?=$this->Form->control('email', [
