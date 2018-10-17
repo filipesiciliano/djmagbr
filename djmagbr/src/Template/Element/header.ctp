@@ -17,12 +17,12 @@
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
                 <i class="fa fa-user"></i>
-                <?=$this->request->session()->read('Auth.User.name');;?>
+                <?=$this->request->session()->read('Auth.User.name');?>
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li>
-                    <a href="/users/edit">
+                    <a href="/users/edit/<?=$this->request->session()->read('Auth.User.id');?>">
                         <i class="fa fa-"></i>
                         &nbsp;&nbsp;Editar
                     </a>
