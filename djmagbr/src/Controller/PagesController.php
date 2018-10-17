@@ -19,6 +19,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Static content controller
@@ -46,6 +47,8 @@ class PagesController extends AppController
      */
     public function display(...$path)
     {
+        $djsModel = TableRegistry::get('Djs');
+        $djs = $djsModel->find('all')->count();
         $count = count($path);
         if (!$count) {
             return $this->redirect('/');
@@ -61,7 +64,7 @@ class PagesController extends AppController
         if (!empty($path[1])) {
             $subpage = $path[1];
         }
-        $this->set(compact('page', 'subpage'));
+        $this->set(compact('page', 'subpage', 'djs'));
 
         try {
             $this->render(implode('/', $path));

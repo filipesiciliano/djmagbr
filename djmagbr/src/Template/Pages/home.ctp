@@ -43,14 +43,14 @@
 
             <div class="col-md-3 col-sm-6">
 
-                <a href="javascript:;" class="dashboard-stat tertiary">
+                <a href="/djs" class="dashboard-stat tertiary">
                     <div class="visual">
                         <i class="fa fa-clock-o"></i>
                     </div> <!-- /.visual -->
 
                     <div class="details">
                         <span class="content">DJ's Cadastrados</span>
-                        <span class="value">153</span>
+                        <span class="value"><?=$djs;?></span>
                     </div> <!-- /.details -->
 
                     <i class="fa fa-play-circle more"></i>
