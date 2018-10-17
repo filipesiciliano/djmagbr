@@ -19,19 +19,19 @@
                 </a>
                 <ul class="sub-nav">
                     <li>
-                        <a href="javascript:;">
+                        <a href="/djs">
                             <i class="fa fa-list"></i>
                             Listar
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;">
+                        <a href="/djs/add">
                             <i class="fa fa-file"></i>
                             Cadastrar
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;">
+                        <a href="/djs/tags">
                             <i class="fa fa-tags"></i>
                             Tags
                         </a>

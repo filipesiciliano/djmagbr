@@ -10,6 +10,7 @@
     <title>
         Dj Mag Brasil - <?=$this->fetch('title') ?>
     </title>
+    <link rel="shortcut icon" href="/img/Djmagbrasil_Logo_16x16px.png">
     <div id="wrapper">
         <?=$this->element('header'); ?>
         <?=$this->element('sidebar'); ?>
@@ -49,6 +50,8 @@
     <?=$this->Html->script([
         "plugins/icheck/jquery.icheck.min.js",
         "plugins/select2/select2.js",
+        "plugins/datatables/jquery.dataTables.min.js",
+        "plugins/datatables/DT_bootstrap.js",
         "plugins/tableCheckable/jquery.tableCheckable.js",
     ]); ?>
 

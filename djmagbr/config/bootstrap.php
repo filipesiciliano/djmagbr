@@ -187,6 +187,7 @@ Type::build('datetime')
     ->useImmutable();
 Type::build('timestamp')
     ->useImmutable();
+Plugin::load('SoftDelete');
 
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
