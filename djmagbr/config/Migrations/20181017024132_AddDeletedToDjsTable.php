@@ -13,7 +13,10 @@ class AddDeletedToDjsTable extends AbstractMigration
     public function change()
     {
         $table = $this->table('djs');
-        $table->addColumn('deleted', 'datetime');
+        $table->addColumn('deleted', 'datetime', [
+            'default' => null,
+            'null' => true,
+        ]);
         $table->update();
     }
 }

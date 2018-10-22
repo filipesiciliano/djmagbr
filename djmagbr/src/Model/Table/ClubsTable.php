@@ -64,6 +64,13 @@ class ClubsTable extends Table
             ->allowEmpty('img', 'create')
             ->notEmpty('img');
 
+        $validator
+            ->scalar('hash')
+            ->maxLength('hash', 255)
+            ->requirePresence('hash', 'create')
+            ->notEmpty('hash');
+
+
         return $validator;
     }
 }

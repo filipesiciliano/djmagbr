@@ -7,22 +7,23 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * DjTags Model
+ * VoteTags Model
  *
+ * @property \App\Model\Table\TagsTable|\Cake\ORM\Association\BelongsTo $Tags
  * @property \App\Model\Table\DjsTable|\Cake\ORM\Association\BelongsTo $Djs
  *
- * @method \App\Model\Entity\DjTag get($primaryKey, $options = [])
- * @method \App\Model\Entity\DjTag newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\DjTag[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DjTag|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DjTag|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DjTag patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DjTag[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DjTag findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DjVoteTag get($primaryKey, $options = [])
+ * @method \App\Model\Entity\DjVoteTag newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\DjVoteTag[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\DjVoteTag|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DjVoteTag|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DjVoteTag patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DjVoteTag[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DjVoteTag findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class DjTagsTable extends Table
+class DjVoteTagsTable extends Table
 {
 
     /**
@@ -35,25 +36,16 @@ class DjTagsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('dj_tags');
-
+        $this->setTable('dj_vote_tags');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Djs', [
-            'foreignKey' => 'dj_id',
-            'joinType' => 'INNER'
-        ]);
 
         $this->belongsTo('Tags', [
             'foreignKey' => 'tag_id',
             'joinType' => 'INNER'
         ]);
-
-        $this->hasMany('VoteTags')
-            ->setForeignKey('tag_id')
-            ->setConditions(['section' => 1]);
     }
 
     /**
@@ -69,24 +61,10 @@ class DjTagsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('tag_id')
-            ->maxLength('tag_id', 4);
-
-        $validator
-            ->integer('dj_id')
-            ->maxLength('dj_id', 4);
-
-        $validator
             ->integer('weight')
-            ->maxLength('weight', 4)
-            ->requirePresence('weight', 'create')
-            ->notEmpty('weight');
+            ->allowEmpty('weight');
 
         return $validator;
-    }
-
-    public function votes()
-    {
     }
 
     /**
@@ -98,8 +76,8 @@ class DjTagsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['dj_id'], 'Djs'));
         $rules->add($rules->existsIn(['tag_id'], 'Tags'));
+        $rules->add($rules->existsIn(['dj_id'], 'Djs'));
 
         return $rules;
     }

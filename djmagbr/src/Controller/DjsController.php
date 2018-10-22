@@ -20,9 +20,9 @@ class DjsController extends AppController
      */
     public function index()
     {
-        $djs = $this->Djs->find('all');
-
+        $djs = $this->Djs->find('all')->contain(['DjTags' => ['Tags']]);
         $this->set(compact('djs'));
+        $this->set('_serialize', ['djs']);
     }
 
     /**
@@ -39,6 +39,7 @@ class DjsController extends AppController
         ]);
 
         $this->set('dj', $dj);
+        $this->set('_serialize', ['dj']);
     }
 
     /**
@@ -71,10 +72,16 @@ class DjsController extends AppController
     public function edit($id = null)
     {
         $dj = $this->Djs->get($id, [
-            'contain' => ['DjTags']
+             'contain' => ['DjTags']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $hasDj = $this->Djs->findByName($this->request->getData('name'))->first();
+            if ($hasDj) {
+                $this->Flash->error(__('There is already a DJ with this name registered.'), ['key' => 'dj']);
+                return $this->redirect(['action' => 'edit', $id]);
+            }
             $dj = $this->Djs->patchEntity($dj, $this->request->getData());
+
             if ($this->Djs->save($dj)) {
                 $this->Flash->success(__('The dj has been saved.'));
 

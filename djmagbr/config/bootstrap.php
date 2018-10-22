@@ -187,6 +187,8 @@ Type::build('datetime')
     ->useImmutable();
 Type::build('timestamp')
     ->useImmutable();
+
+//Plugins
 Plugin::load('SoftDelete');
 
 /*

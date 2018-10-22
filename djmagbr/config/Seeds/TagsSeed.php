@@ -3,9 +3,9 @@ use Migrations\AbstractSeed;
 use Cake\Auth\DefaultPasswordHasher; // Add this line
 
 /**
- * Users seed.
+ * Tags seed.
  */
-class UsersSeed extends AbstractSeed
+class TagsSeed extends AbstractSeed
 {
  /**
   * Run Method.
@@ -21,15 +21,12 @@ class UsersSeed extends AbstractSeed
  {
   $data = [];
 
-  $table = $this->table('users');
+  $table = $this->table('tags');
   $data  = [
-   'name'     => 'Filipe Siciliano',
-   'email'    => 'filipesiciliano@gmail.com',
-   'password' => (new DefaultPasswordHasher)->hash(12345),
-   'created' => date('Y-m-d'),
-   'modified' => date('Y-m-d')
-   
-  ];
+   'name'     => 'Alog',
+   'created' => date('Y-m-d H:m:s'),
+   'modified' => date('Y-m-d H:m:s')
+    ];
   $table->insert($data)->save();
  }
 }

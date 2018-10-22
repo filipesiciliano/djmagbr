@@ -4,17 +4,18 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * DjTag Entity
+ * ClubTag Entity
  *
  * @property int $id
- * @property int $tag_id
- * @property int $dj_id
+ * @property string $name
+ * @property int $club_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property int $weight
  *
- * @property \App\Model\Entity\Dj $dj
+ * @property \App\Model\Entity\Club $club
  */
-class DjTag extends Entity
+class ClubTag extends Entity
 {
 
     /**

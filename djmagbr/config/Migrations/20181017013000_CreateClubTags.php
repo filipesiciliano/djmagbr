@@ -13,11 +13,14 @@ class CreateClubTags extends AbstractMigration
     public function change()
     {
         $table = $this->table('club_tags');
-        $table->addColumn('name', 'string', [
+        
+        $table->addColumn('tag_id', 'integer', [
             'default' => null,
-            'limit' => 255,
+            'limit' => 4,
             'null' => false,
-        ])->addIndex(['name']);
+        ])->addIndex(['tag_id']);
+
+
         $table->addColumn('club_id', 'integer', [
             'default' => null,
             'limit' => 255,

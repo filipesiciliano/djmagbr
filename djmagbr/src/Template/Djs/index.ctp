@@ -49,10 +49,12 @@
                                         <?= h($dj->name) ?>
                                     </td>
                                     <td>
-                                        Tags
+                                        <?=(count($dj->dj_tags) == 0) ? 'Nenhuma Tag cadastrada para esse DJ' : '';?>
+                                        <?php foreach ($dj->dj_tags as $tag): ?>
+                                            <span class="label label-default"><?=$tag->tag->name;?></span>
+                                        <?php endforeach; ?>
                                     </td>
                                     <td class="actions">
-
 
                                         <?= $this->Html->link(__('Editar'), ['action' => 'edit', $dj->id], ['class' => 'btn btn-xs btn-warning']) ?>
 

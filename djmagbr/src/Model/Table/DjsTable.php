@@ -41,8 +41,8 @@ class DjsTable extends Table
         $this->setTable('djs');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
-        
         $this->addBehavior('Timestamp');
+        
         $this->hasMany('DjTags')
             ->setForeignKey('dj_id')
             ->setDependent(true);

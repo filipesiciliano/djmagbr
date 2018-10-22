@@ -25,7 +25,7 @@
                 <div class="row">
 
                     <div class="col-sm-4">
-
+                    <?=$this->Flash->render('dj'); ?>
                     <?= $this->Form->create($dj) ?>
                     <?=$this->Form->control('name', [
                                 'class'       => 'form-control',

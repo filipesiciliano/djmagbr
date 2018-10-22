@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class CreateDjTags extends AbstractMigration
+class CreateVoteTags extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,7 +12,7 @@ class CreateDjTags extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('dj_tags');
+        $table = $this->table('vote_tags');
         
         $table->addColumn('tag_id', 'integer', [
             'default' => null,
@@ -23,9 +23,22 @@ class CreateDjTags extends AbstractMigration
         $table->addColumn('dj_id', 'integer', [
             'default' => null,
             'limit' => 4,
-            'null' => false,
+            'null' => true,
         ])->addIndex(['dj_id']);
+
+        $table->addColumn('section', 'integer', [
+            'default' => null,
+            'limit' => 2,
+            'null' => false,
+        ])->addIndex(['section']);
+
         
+        $table->addColumn('weight', 'integer', [
+            'default' => null,
+            'limit' => 4,
+            'null' => true,
+         ])->addIndex(['weight']);
+
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,
@@ -34,6 +47,7 @@ class CreateDjTags extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
+
         $table->create();
     }
 }

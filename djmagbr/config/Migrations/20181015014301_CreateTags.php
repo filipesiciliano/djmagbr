@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class CreateDjTags extends AbstractMigration
+class CreateTags extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,20 +12,12 @@ class CreateDjTags extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('dj_tags');
-        
-        $table->addColumn('tag_id', 'integer', [
+        $table = $this->table('tags');
+        $table->addColumn('name', 'string', [
             'default' => null,
-            'limit' => 4,
+            'limit' => 255,
             'null' => false,
-        ])->addIndex(['tag_id']);
-
-        $table->addColumn('dj_id', 'integer', [
-            'default' => null,
-            'limit' => 4,
-            'null' => false,
-        ])->addIndex(['dj_id']);
-        
+        ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,
@@ -34,6 +26,7 @@ class CreateDjTags extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
+
         $table->create();
     }
 }

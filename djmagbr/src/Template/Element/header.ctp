@@ -11,7 +11,7 @@
     <a href="javascript:;" data-toggle="collapse" data-target=".sidebar-collapse" id="sidebar-toggle" class="navbar-toggle collapsed">
         <i class="fa fa-reorder"></i>
     </a>
-</header> <!-- header -->
+</header>
 <nav id="top-bar" class="collapse top-bar-collapse">
     <ul class="nav navbar-nav pull-right">
         <li class="dropdown">
@@ -37,4 +37,4 @@
             </ul>
         </li>
     </ul>
-</nav> <!-- /#top-bar -->
+</nav>
