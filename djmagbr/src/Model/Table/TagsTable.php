@@ -7,9 +7,8 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * DjTags Model
+ * Tags Model
  *
- * @property \App\Model\Table\DjsTable|\Cake\ORM\Association\BelongsTo $Djs
  *
  * @method \App\Model\Entity\DjTag get($primaryKey, $options = [])
  * @method \App\Model\Entity\DjTag newEntity($data = null, array $options = [])
@@ -22,7 +21,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class DjTagsTable extends Table
+class TagsTable extends Table
 {
 
     /**
@@ -35,25 +34,11 @@ class DjTagsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('dj_tags');
-
+        $this->setTable('tags');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Djs', [
-            'foreignKey' => 'dj_id',
-            'joinType' => 'INNER'
-        ]);
-
-        $this->belongsTo('Tags', [
-            'foreignKey' => 'tag_id',
-            'joinType' => 'INNER'
-        ]);
-
-        $this->hasMany('VoteTags')
-            ->setForeignKey('tag_id')
-            ->setConditions(['section' => 1]);
     }
 
     /**
@@ -69,43 +54,18 @@ class DjTagsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('tag_id')
-            ->maxLength('tag_id', 4);
+            ->scalar('name')
+            ->maxLength('name', 255)
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
 
-        $validator
-            ->integer('dj_id')
-            ->maxLength('dj_id', 4);
-
-        $validator
-            ->integer('weight')
-            ->maxLength('weight', 4)
-            ->requirePresence('weight', 'create')
-            ->notEmpty('weight');
 
         return $validator;
     }
 
-    public function votes()
+    
+    public function existTag($name)
     {
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['dj_id'], 'Djs'));
-        $rules->add($rules->existsIn(['tag_id'], 'Tags'));
-
-        return $rules;
-    }
-
-    public function existDjTag($dj_id, $tag_id)
-    {
-        return $this->findByDjIdAndTagId($dj_id, $tag_id)->first();
+        return $this->findByName($name)->first();
     }
 }

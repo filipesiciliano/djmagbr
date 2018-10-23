@@ -37,9 +37,60 @@ class DjsController extends AppController
         $dj = $this->Djs->get($id, [
             'contain' => ['DjTags']
         ]);
-
         $this->set('dj', $dj);
         $this->set('_serialize', ['dj']);
+    }
+
+    public function tags($id = null)
+    {
+        $dj = $this->Djs->get($id, [
+            'contain' => ['DjTags' => ['Tags']]
+        ]);
+        $dj->tags = '';
+        foreach ($dj->dj_tags as $k => $tag) {
+            $sep = (isset($dj->dj_tags[$k+1])) ? ',' : '';
+            $dj->tags .= $tag->tag->name . $sep;
+        }
+        $this->set('dj', $dj);
+        $this->set('_serialize', ['dj']);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $tags = $this->request->getData(['name']);
+            $tags = explode(',', $tags);
+            $exists = '';
+            $new = '';
+            foreach ($tags as $tag) {
+                if ($hasTag = $this->Djs->DjTags->Tags->existTag($tag)) {
+                    if (!$this->Djs->DjTags->existDjTag($id, $hasTag->id)) {
+                        $djTag = $this->Djs->DjTags->newEntity();
+                        $djTag->dj_id = $id;
+                        $djTag->tag_id = $hasTag->id;
+                        $this->Djs->DjTags->save($djTag);
+                    } else {
+                        $exists .= $tag . ', ';
+                    }
+                } else {
+                    $tagE = $this->Djs->DjTags->Tags->newEntity();
+                    $tagE->name = $tag;
+                    $new .= $tag . ', ';
+                    // TODO Terminar
+                    if ($result = $this->Djs->DjTags->Tags->save($tagE)) {
+                        $tagId = $result->id;
+                        $djTag = $this->Djs->DjTags->newEntity();
+                        $djTag->dj_id = $id;
+                        $djTag->tag_id = $tagId;
+                        $this->Djs->DjTags->save($djTag);
+                    }
+                }
+            }
+
+            if ($new !== '') {
+                $this->Flash->success(__('Tags ' . $new. ' salvas com sucesso.'), ['key' => 'dj']);
+            }
+            if ($exists !== '') {
+                $this->Flash->error(__('As Tags ' . $exists. ' já foram vinculadas.'), ['key' => 'dj']);
+            }
+            return $this->redirect(['action' => 'tags', $id]);
+        }
     }
 
     /**

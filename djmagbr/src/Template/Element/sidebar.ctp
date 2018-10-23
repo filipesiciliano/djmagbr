@@ -33,7 +33,7 @@
                     <li>
                         <a href="/djs/tags">
                             <i class="fa fa-tags"></i>
-                            Tags
+                            Tags não Vinculadas
                         </a>
                     </li>
                 </ul>

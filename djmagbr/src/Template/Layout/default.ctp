@@ -75,6 +75,7 @@
     ]); ?>
     <?=$this->Html->script("demos/dashboard.js"); ?>
     <?=$this->fetch('script') ?>
+    <?=$this->fetch('scriptBottom');?>
     <?=$this->element('footer'); ?>
 </body>
 

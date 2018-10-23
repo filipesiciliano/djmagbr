@@ -55,9 +55,8 @@
                                         <?php endforeach; ?>
                                     </td>
                                     <td class="actions">
-
+                                        <?= $this->Html->link(__('Tags'), ['action' => 'tags', $dj->id], ['class' => 'btn btn-xs btn-success']) ?>
                                         <?= $this->Html->link(__('Editar'), ['action' => 'edit', $dj->id], ['class' => 'btn btn-xs btn-warning']) ?>
-
                                         <?= $this->Form->postLink(__('Deletar'), ['action' => 'delete', $dj->id], ['confirm' => __('Tem certeza que gostaria de deletar o DJ # {0}?', $dj->name), 'class' => 'btn btn-xs btn-danger'])?>
                                     </td>
                                 </tr>
