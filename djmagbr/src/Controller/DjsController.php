@@ -41,6 +41,25 @@ class DjsController extends AppController
         $this->set('_serialize', ['dj']);
     }
 
+    public function unlinkedTags() {
+        $this->loadModel('VoteTags');
+        $this->loadModel('Djs');
+        $djs = $this->Djs->find('all', [
+            'fields' => [
+                'id',
+                'name'
+            ]
+        ])->toArray();
+        $tags = $this->VoteTags->find('all', [
+            'contain' => ['Tags'],
+            'conditions' => [
+                'section' => 1
+            ]
+        ])->toArray();
+        $this->set('tags', $tags);
+        $this->set('djs', $djs);
+    }
+
     public function tags($id = null)
     {
         $dj = $this->Djs->get($id, [
@@ -87,7 +106,7 @@ class DjsController extends AppController
                 $this->Flash->success(__('Tags ' . $new. ' salvas com sucesso.'), ['key' => 'dj']);
             }
             if ($exists !== '') {
-                $this->Flash->error(__('As Tags ' . $exists. ' já foram vinculadas.'), ['key' => 'dj']);
+                $this->Flash->error(__('As Tags ' . $exists. ' já estavam vinculadas.'), ['key' => 'dj']);
             }
             return $this->redirect(['action' => 'tags', $id]);
         }

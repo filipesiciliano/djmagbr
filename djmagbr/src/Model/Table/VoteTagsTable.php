@@ -23,7 +23,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class DjVoteTagsTable extends Table
+class VoteTagsTable extends Table
 {
 
     /**
@@ -36,7 +36,7 @@ class DjVoteTagsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('dj_vote_tags');
+        $this->setTable('vote_tags');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -64,6 +64,10 @@ class DjVoteTagsTable extends Table
             ->integer('weight')
             ->allowEmpty('weight');
 
+        $validator
+            ->integer('voter_id')
+            ->allowEmpty('voter_id');
+
         return $validator;
     }
 
@@ -77,7 +81,6 @@ class DjVoteTagsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['tag_id'], 'Tags'));
-        $rules->add($rules->existsIn(['dj_id'], 'Djs'));
 
         return $rules;
     }

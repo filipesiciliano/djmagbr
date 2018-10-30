@@ -28,7 +28,7 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
     public $helpers = [
-        'Form' => ['className' => 'form'],
+        'Form' => ['className' => 'Form'],
     ];
     /**
      * Initialization hook method.

@@ -25,6 +25,12 @@ class CreateDjTags extends AbstractMigration
             'limit' => 4,
             'null' => false,
         ])->addIndex(['dj_id']);
+
+        $table->addColumn('section', 'integer', [
+            'default' => null,
+            'limit' => 4,
+            'null' => false,
+        ])->addIndex(['section']);
         
         $table->addColumn('created', 'datetime', [
             'default' => null,

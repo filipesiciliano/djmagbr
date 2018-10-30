@@ -24,6 +24,7 @@ class DjsSeed extends AbstractSeed
         $table = $this->table('djs');
         $data  = [
    'name'     => 'Alok',
+   'img'     => '',
    'created' => date('Y-m-d'),
    'modified' => date('Y-m-d'),
    'deleted' => null

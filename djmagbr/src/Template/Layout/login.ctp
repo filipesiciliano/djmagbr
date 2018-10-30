@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.css" type="text/css" />
 
     <link rel="stylesheet" href="/css/App.css" type="text/css" />
-    <link rel="stylesheet" href="/css/Login.css" type="text/css" />
+    <link rel="stylesheet" href="/css/login.css" type="text/css" />
 
     <link rel="stylesheet" href="/css/custom.css" type="text/css" />
 

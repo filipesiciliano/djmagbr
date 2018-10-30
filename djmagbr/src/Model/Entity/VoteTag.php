@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $tag_id
+ * @property int $voter_id
  * @property int $section
  * @property int $weight
  * @property \Cake\I18n\FrozenTime $created
