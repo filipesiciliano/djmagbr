@@ -41,7 +41,8 @@ class DjsController extends AppController
         $this->set('_serialize', ['dj']);
     }
 
-    public function unlinkedTags() {
+    public function unlinkedTags()
+    {
         $this->loadModel('VoteTags');
         $this->loadModel('Djs');
         $djs = $this->Djs->find('all', [
@@ -53,7 +54,7 @@ class DjsController extends AppController
         $tags = $this->VoteTags->find('all', [
             'contain' => ['Tags'],
             'conditions' => [
-                'section' => 1
+                'VoteTags.section' => 1
             ]
         ])->toArray();
         $this->set('tags', $tags);
@@ -77,9 +78,10 @@ class DjsController extends AppController
             $tags = explode(',', $tags);
             $exists = '';
             $new = '';
+            $deleteTags = $this->Djs->DjTags->deleteAll(['dj_id' => $id]);
             foreach ($tags as $tag) {
-                if ($hasTag = $this->Djs->DjTags->Tags->existTag($tag)) {
-                    if (!$this->Djs->DjTags->existDjTag($id, $hasTag->id)) {
+                if ($hasTag = $this->Djs->DjTags->Tags->existTag($tag, 1)) {
+                    if (!$this->Djs->DjTags->existDjTag($hasTag->id)) {
                         $djTag = $this->Djs->DjTags->newEntity();
                         $djTag->dj_id = $id;
                         $djTag->tag_id = $hasTag->id;
@@ -90,6 +92,7 @@ class DjsController extends AppController
                 } else {
                     $tagE = $this->Djs->DjTags->Tags->newEntity();
                     $tagE->name = $tag;
+                    $tagE->section = 1;
                     $new .= $tag . ', ';
                     // TODO Terminar
                     if ($result = $this->Djs->DjTags->Tags->save($tagE)) {
@@ -180,5 +183,30 @@ class DjsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function generateDjVotes($dj_id = null, $tag_id = null, $votes = null, $weight = null)
+    {
+        if ($this->request->is('post')) {
+            $voteTags = TableRegistry::get('vote_tags');
+
+            $vote = $voteTags->newEntity();
+            $vote->dj_id = $dj_id;
+            $vote->tag_id = $tag_id;
+            $vote->weight = $weight;
+            //TODO Terminar criação de clientes
+            if ($this->Djs->save($dj)) {
+                $this->Flash->success(__('The dj has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The dj could not be saved. Please, try again.'));
+        }
+        $this->set(compact('dj'));
+    }
+
+    public function generateRandomEmail($length = 6)
+    {
+        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)))), 1, $length). '@djmagbr.com';
     }
 }

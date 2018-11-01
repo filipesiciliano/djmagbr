@@ -53,7 +53,7 @@ class DjTagsTable extends Table
 
         $this->hasMany('VoteTags')
             ->setForeignKey('tag_id')
-            ->setConditions(['section' => 1]);
+            ->setConditions(['VoteTags.section' => 1]);
     }
 
     /**
@@ -75,12 +75,6 @@ class DjTagsTable extends Table
         $validator
             ->integer('dj_id')
             ->maxLength('dj_id', 4);
-
-        $validator
-            ->integer('weight')
-            ->maxLength('weight', 4)
-            ->requirePresence('weight', 'create')
-            ->notEmpty('weight');
 
         return $validator;
     }
@@ -104,8 +98,8 @@ class DjTagsTable extends Table
         return $rules;
     }
 
-    public function existDjTag($dj_id, $tag_id)
+    public function existDjTag($tag_id)
     {
-        return $this->findByDjIdAndTagId($dj_id, $tag_id)->first();
+        return $this->findByTagId($tag_id)->first();
     }
 }

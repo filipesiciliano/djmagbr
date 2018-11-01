@@ -18,6 +18,12 @@ class CreateTags extends AbstractMigration
             'limit' => 255,
             'null' => false,
         ]);
+        $table->addColumn('section', 'integer', [
+            'default' => null,
+            'limit' => 2,
+            'null' => false,
+        ])->addIndex(['section']);
+
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,

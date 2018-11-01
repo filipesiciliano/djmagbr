@@ -59,13 +59,18 @@ class TagsTable extends Table
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
+        $validator
+            ->scalar('section')
+            ->maxLength('section', 4)
+            ->allowEmpty('section');
+
 
         return $validator;
     }
 
     
-    public function existTag($name)
+    public function existTag($name, $section)
     {
-        return $this->findByName($name)->first();
+        return $this->findByNameAndSection($name, $section)->first();
     }
 }

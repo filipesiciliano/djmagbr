@@ -3,9 +3,9 @@ use Migrations\AbstractSeed;
 use Cake\Auth\DefaultPasswordHasher; // Add this line
 
 /**
- * Djs seed.
+ * Tags seed.
  */
-class DjsSeed extends AbstractSeed
+class DjTagsSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -20,7 +20,7 @@ class DjsSeed extends AbstractSeed
     public function run()
     {
         $data = [];
-        $djs = [
+        $tags = [
             "8THSIN",
             "A Liga",
             "Adana Twins",
@@ -296,14 +296,14 @@ class DjsSeed extends AbstractSeed
             "Suicide Lemon",
             "Briefing"
         ];
-        $table = $this->table('djs');
-        foreach ($djs as $dj) {
+
+        $table = $this->table('dj_tags');
+        foreach ($tags as $k => $tag) {
             $data  = [
-                'name'     => $dj,
-                'img'     => '',
-                'created' => date('Y-m-d'),
-                'modified' => date('Y-m-d'),
-                'deleted' => null
+              'tag_id'          => $k+1,
+              'dj_id'    => $k+1,
+              'created'         => date('Y-m-d H:m:s'),
+              'modified'        => date('Y-m-d H:m:s')
             ];
             $table->insert($data)->save();
         }

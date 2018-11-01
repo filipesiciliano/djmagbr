@@ -5,7 +5,7 @@
 ?>
 <div id="content">
     <div id="content-header">
-        <h1>Criar DJ</h1>
+        <h1>Editar DJ</h1>
     </div> <!-- #content-header -->
     <div id="content-container">
 
@@ -15,7 +15,7 @@
 
                 <h3>
                     <i class="fa fa-tasks"></i>
-                    Cadastrar
+                    Editar
                 </h3>
 
             </div> <!-- /.portlet-header -->
@@ -32,7 +32,7 @@
                                 'placeholder' => 'Nome do DJ',
                                 'label'       => 'Nome do DJ',
                             ]) ?>
-                    <?=$this->Form->button('Criar', ['class' => 'btn btn-primary btn-block']) ?>
+                    <?=$this->Form->button('Salvar', ['class' => 'btn btn-success btn-block']) ?>
                     <?=$this->Form->end() ?>
 
                     </div> <!-- /.col -->

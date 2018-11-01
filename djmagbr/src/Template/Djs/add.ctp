@@ -32,7 +32,7 @@
                                 'placeholder' => 'Nome do DJ',
                                 'label'       => 'Nome do DJ',
                             ]) ?>
-                    <?=$this->Form->button('Criar', ['class' => 'btn btn-primary btn-block']) ?>
+                    <?=$this->Form->button('Criar', ['class' => 'btn btn-success btn-block']) ?>
                     <?=$this->Form->end() ?>
 
                     </div> <!-- /.col -->
