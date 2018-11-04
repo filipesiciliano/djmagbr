@@ -20,13 +20,6 @@ class CreateVoteTags extends AbstractMigration
             'null' => false,
         ])->addIndex(['tag_id']);
 
-        $table->addColumn('candidate_id', 'integer', [
-            'default' => null,
-            'limit' => 4,
-            'null' => true,
-        ])->addIndex(['candidate_id']);
-
-
         $table->addColumn('voter_id', 'integer', [
             'default' => null,
             'limit' => 4,

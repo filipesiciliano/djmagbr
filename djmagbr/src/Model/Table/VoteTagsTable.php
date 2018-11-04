@@ -10,7 +10,6 @@ use Cake\Validation\Validator;
  * VoteTags Model
  *
  * @property \App\Model\Table\TagsTable|\Cake\ORM\Association\BelongsTo $Tags
- * @property \App\Model\Table\DjsTable|\Cake\ORM\Association\BelongsTo $Djs
  *
  * @method \App\Model\Entity\DjVoteTag get($primaryKey, $options = [])
  * @method \App\Model\Entity\DjVoteTag newEntity($data = null, array $options = [])
@@ -62,15 +61,21 @@ class VoteTagsTable extends Table
 
         $validator
             ->integer('weight')
-            ->allowEmpty('weight');
+            ->requirePresence('weight', 'create')
+            ->notEmpty('weight');
 
-        $validator
+       $validator
+            ->integer('tag_id')
+            ->requirePresence('tag_id', 'create')
+            ->notEmpty('tag_id');
+
+       $validator
             ->integer('voter_id')
-            ->allowEmpty('voter_id');
+            ->requirePresence('voter_id', 'create')
+            ->notEmpty('voter_id');
 
         return $validator;
     }
-
     /**
      * Returns a rules checker object that will be used for validating
      * application integrity.

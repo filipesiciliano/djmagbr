@@ -36,6 +36,22 @@ class CreateVotersTable extends AbstractMigration
             'limit' => 255,
             'null' => false,
         ]);
+
+        $table->addColumn('hash', 'string', [
+            'default' => null,
+            'limit' => 255,
+            'null' => false,
+        ])->addIndex(['hash']);
+        
+        $table->addColumn('created', 'datetime', [
+            'default' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('modified', 'datetime', [
+            'default' => null,
+            'null' => false,
+        ]);
+
         $table->create();
     }
 }

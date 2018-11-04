@@ -46,21 +46,20 @@
                                         <?= $this->Number->format($tag->id) ?>
                                     </td>
                                     <td>
-                                        <?= h($tag->tag->name) ?>
+                                        <?= h($tag->name) ?>
                                     </td>
                                     <td>
-                                    <select name="Djs" id="djs" class="form-control">
-                                    <option value="">Selecione um DJ</option>
-                                    <?php 
-                                        foreach($djs as $dj) {
-                                        echo "<option value ='$dj->id'>$dj->name</option>";
-                                        }
-                                    ?>
+                                    <select name="Djs" class="form-control select_dj" data-tag-id="<?=$tag->id;?>">
+                                        <option value="">Selecione um DJ</option>
+                                        <?php
+                                            foreach ($djs as $dj) {
+                                                echo "<option value ='$dj->id'>$dj->name</option>";
+                                            }
+                                        ?>
                                     </select>
-                                        
                                     </td>
                                     <td class="actions">
-                                        <?= $this->Html->link(__('Vincular'), ['action' => 'link_tag', $tag->id], ['class' => 'btn btn-xs btn-warning']) ?>
+                                        <?= $this->Html->link(__('Vincular'), ['action' => '#'], ['class' => 'btn btn-xs btn-warning link_dj' , 'data-tag-id' => $tag->id, 'data-vote-id' => $tag->id]) ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -79,3 +78,4 @@
 
     </div> <!-- /#content-container -->
 </div> <!-- #content -->
+<?=$this->Html->script('tags', ['block' => 'scriptBottom']); ?>

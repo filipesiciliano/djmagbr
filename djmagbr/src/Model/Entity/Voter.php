@@ -4,19 +4,17 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * VoteTag Entity
+ * Voter Entity
  *
  * @property int $id
- * @property int $tag_id
- * @property int $voter_id
- * @property int $section
- * @property int $weight
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
+ * @property string $name
+ * @property string $email
+ * @property string $gender
+ * @property string $city
  *
- * @property \App\Model\Entity\Tag $tag
+ * @property \App\Model\Entity\VoteTag[] $vote_tags
  */
-class VoteTag extends Entity
+class Voter extends Entity
 {
 
     /**
@@ -29,9 +27,10 @@ class VoteTag extends Entity
      * @var array
      */
     protected $_accessible = [
-        'section' => true,
-        'tag_id' => true,
-        'voter_id' => true,
-        'weight' => true
+        'name' => true,
+        'email' => true,
+        'gender' => true,
+        'city' => true,
+        'vote_tags' => true
     ];
 }

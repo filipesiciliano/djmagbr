@@ -65,11 +65,7 @@ class ClubTagsTable extends Table
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
-        $validator
-            ->integer('weight')
-            ->requirePresence('weight', 'create')
-            ->notEmpty('weight');
-
+        
         return $validator;
     }
 

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Djs Controller
@@ -43,26 +44,52 @@ class DjsController extends AppController
 
     public function unlinkedTags()
     {
-        $this->loadModel('VoteTags');
+        //TODO Terminar
+        $this->loadModel('DjTags');
         $this->loadModel('Djs');
-        $djs = $this->Djs->find('all', [
-            'fields' => [
-                'id',
-                'name'
-            ]
+        $djs = $this->Djs->find()
+        ->select(['id', 'name'])
+        ->toArray();
+
+        $djTags = $this->DjTags->find()
+        ->select(['tag_id'])
+        ->group('DjTags.tag_id');
+        
+        $this->loadModel('Tags');
+        $tags = $this->Tags->find()
+        ->where([
+            'Tags.id NOT IN' => $djTags
         ])->toArray();
-        $tags = $this->VoteTags->find('all', [
-            'contain' => ['Tags'],
-            'conditions' => [
-                'VoteTags.section' => 1
-            ]
-        ])->toArray();
+
         $this->set('tags', $tags);
         $this->set('djs', $djs);
     }
 
+    public function linktag($dj_id = null, $tag_id = null)
+    {
+        $this->autoRender = false;
+        $this->loadModel('DjTags');
+        $data = [
+            'dj_id' => $dj_id,
+            'tag_id' => $tag_id
+        ];
+        if (!$this->DjTags->findByTagId($tag_id)->toArray()) {
+            $dj = $this->DjTags->newEntity();
+            $dj = $this->DjTags->patchEntity($dj, $data);
+            if ($this->DjTags->save($dj)) {
+                $message = ['success' => true, 'message' => 'Salvo com sucesso!'];
+            } else {
+                $message = ['success' => false, 'message' => 'Erro ao salvar!'];
+            }
+        } else {
+            $message = ['success' => false, 'message' => 'TAG Já vinculada!'];
+        }
+        return $this->response->withType("application/json")->withStringBody(json_encode($message));
+    }
+
     public function tags($id = null)
     {
+        $this->loadModel('VoteTags');
         $dj = $this->Djs->get($id, [
             'contain' => ['DjTags' => ['Tags']]
         ]);
@@ -185,28 +212,49 @@ class DjsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
-    public function generateDjVotes($dj_id = null, $tag_id = null, $votes = null, $weight = null)
+    public function generateDjVotes($dj_id = null, $votes = null, $weight = null)
     {
+        $this->autoRender = false;
         if ($this->request->is('post')) {
-            $voteTags = TableRegistry::get('vote_tags');
-
-            $vote = $voteTags->newEntity();
-            $vote->dj_id = $dj_id;
-            $vote->tag_id = $tag_id;
-            $vote->weight = $weight;
-            //TODO Terminar criação de clientes
-            if ($this->Djs->save($dj)) {
-                $this->Flash->success(__('The dj has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+            $votes = ($votes !== 0) ? $votes : 1;
+            $this->loadModel('Tags');
+            for ($i = 1; $i<= $votes; $i++) {
+                $voters = TableRegistry::get('Voters');
+                $voter = $voters->newEntity();
+                $voter->email = $this->generateRandomString(20);
+                $voter->name = 'DJMagBr Random';
+                $voter->gender = 1;
+                $voter->city = 'RJ';
+                $voter->hash = md5($voter->email . date('Y-m-d'));
+                $tag = $this->Djs->DjTags->find('all')
+                    ->select(['tag_id'])
+                    ->where(['DjTags.dj_id' => $dj_id])
+                    ->order('rand()')
+                    ->first();
+                if ($voters->save($voter)) {
+                    $voteTags = TableRegistry::get('VoteTags');
+                    $data = [
+                    'tag_id' => $tag->tag_id,
+                    'voter_id' => $voter->id,
+                    'section' => 1,
+                    'weight' => $weight,
+                ];
+                    $vote = $voteTags->newEntity($data, ['associated' => [], 'validate' => false]);
+                    $voteTags->save($vote);
+                }
             }
-            $this->Flash->error(__('The dj could not be saved. Please, try again.'));
+            return $this->response->withType("application/json")->withStringBody(json_encode(['success' => true, 'message' => 'Votos gerados com sucesso!']));
         }
-        $this->set(compact('dj'));
     }
 
-    public function generateRandomEmail($length = 6)
+    public function generateRandomString($length = 10)
     {
-        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)))), 1, $length). '@djmagbr.com';
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString . '@djmagbr.com';
     }
 }
